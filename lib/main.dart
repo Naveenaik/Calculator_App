@@ -10,7 +10,7 @@ class CalculatorApp extends StatefulWidget {
 }
 class Calc extends State<CalculatorApp> {
   double result=0;
-  int out=0,flag=0,opState=0,dot=1;
+  int out=0,flag=0,opState=0,dot=1,dlt=0;
   double num1=0;
   double num2=0;
   String alu='';
@@ -30,19 +30,29 @@ class Calc extends State<CalculatorApp> {
         opState=0;
       }
       else if (value == 12) {
-        String s = fnl;
-        if(opState==1||opState==2||opState==3||opState==4||opState==5) {
-          fnl = '';
-          opState=0;
-        }
-        else {
-          if(opState==1||opState==2||opState==3||opState==4||opState==5) {
-            fnl = '';
-            opState=0;
-          }
-          else if (fnl.substring(s.length - 1) == '.')
+        if (dlt == 1) {
+          String s = fnl;
+          if (fnl.substring(s.length - 1) == '.')
             dot = 1;
           fnl = fnl.substring(0, s.length - 1);
+        }
+        else {
+          String s = fnl;
+          if (opState == 1 || opState == 2 || opState == 3 || opState == 4 ||
+              opState == 5) {
+            fnl = '';
+            opState = 0;
+          }
+          else {
+            if (opState == 1 || opState == 2 || opState == 3 || opState == 4 ||
+                opState == 5) {
+              fnl = '';
+              opState = 0;
+            }
+            else if (fnl.substring(s.length - 1) == '.')
+              dot = 1;
+            fnl = fnl.substring(0, s.length - 1);
+          }
         }
       }
       else if(value==13)
@@ -60,8 +70,11 @@ class Calc extends State<CalculatorApp> {
   }
   void operator(String op)
   {
+    dlt=1;
     if(fnl!='')
       alu=fnl;
+    else
+      opState=0;
     flag=1;
     setState(() {
       dot=1;
@@ -92,7 +105,7 @@ class Calc extends State<CalculatorApp> {
       }
       else if(op=='=')
       {
-        if(opState==1||opState==2||opState==3||opState==4||opState==5) {
+        if(opState==1||opState==2||opState==3||opState==4||opState==5&&opState!=0) {
           num2=double.parse(alu);
           switch(opState)
           {
