@@ -10,17 +10,18 @@ class CalculatorApp extends StatefulWidget {
 }
 class Calc extends State<CalculatorApp> {
   double result=0;
-  int out=0,flag=0,opState=0,dot=1,dlt=0;
+  int out=0,opState=0,dot=1,dlt=0;
+  bool flag=false;
   double num1=0;
   double num2=0;
   String alu='';
   String fnl='';
   double temp=0;
   void ButtonPressed(int value) {
-    if(flag==1)
+    if(flag)
     {
       fnl='';
-      flag=0;
+      flag=false;
     }
     setState(() {
       if (value == 11) {
@@ -71,14 +72,11 @@ class Calc extends State<CalculatorApp> {
   void operator(String op)
   {
     dlt=1;
-    if(fnl!='')
-      alu=fnl;
-    else
-      opState=0;
-    flag=1;
+    (fnl!='')?alu=fnl:opState=0;
+    flag=true;
     setState(() {
       dot=1;
-      if(op=='+') {
+      /*if(op=='+') {
         fnl='+';
         opState=1;
         num1=double.parse(alu);
@@ -102,8 +100,39 @@ class Calc extends State<CalculatorApp> {
         fnl='%';
         opState=5;
         num1=double.parse(alu);
-      }
-      else if(op=='=')
+      }*/
+      if(op!='=')
+        {
+          switch(op)
+          {
+            case '+':
+              fnl='+';
+              opState=1;
+              num1=double.parse(alu);
+              break;
+            case '-':
+              fnl='-';
+              opState=2;
+              num1=double.parse(alu);
+              break;
+            case '*':
+              fnl='*';
+              opState=3;
+              num1=double.parse(alu);
+              break;
+            case '/':
+              fnl='/';
+              opState=4;
+              num1=double.parse(alu);
+              break;
+            case '%':
+              fnl='%';
+              opState=5;
+              num1=double.parse(alu);
+              break;
+          }
+        }
+      else
       {
         if(opState==1||opState==2||opState==3||opState==4||opState==5&&opState!=0) {
           num2=double.parse(alu);
