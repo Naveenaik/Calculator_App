@@ -76,31 +76,6 @@ class Calc extends State<CalculatorApp> {
     flag=true;
     setState(() {
       dot=1;
-      /*if(op=='+') {
-        fnl='+';
-        opState=1;
-        num1=double.parse(alu);
-      }
-      else if(op=='-') {
-        fnl='-';
-        opState=2;
-        num1=double.parse(alu);
-      }
-      else if(op=='*') {
-        fnl='*';
-        opState=3;
-        num1=double.parse(alu);
-      }
-      else if(op=='/') {
-        fnl='/';
-        opState=4;
-        num1=double.parse(alu);
-      }
-      else if(op=='%') {
-        fnl='%';
-        opState=5;
-        num1=double.parse(alu);
-      }*/
       if(op!='=')
         {
           switch(op)
